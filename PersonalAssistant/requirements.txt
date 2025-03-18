@@ -1,0 +1,15 @@
+speechrecognition
+wheel
+pipwin
+pyaudio
+gtts
+pydub 
+pyttsx3
+#playsound
+langchain 
+langchain_community 
+langchain-openai
+llama-index 
+openai
+docx2txt
+keyboard
