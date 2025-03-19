@@ -14,8 +14,11 @@ def speak(s):
     return
 
 def weather():
-    
-    key = "your Openweather API key"
+ 
+    for widget in frame2.winfo_children():
+        widget.destroy()  # Remove all widgets inside the frame
+
+    key = "OpenWeather API key"
     city = e.get()#input("Enter the city name: ")
     url = f'https://api.openweathermap.org/data/2.5/weather?q={city}&units=metric&appid={key}'
 
@@ -27,9 +30,10 @@ def weather():
     except error.HTTPError:    
         print("City not found.")
         speak("City Not Found.")
-        tkinter.Label(window, text = "Not Found", fg = "red").grid(row = 2, column = 1)
-        tkinter.Label(window, text = "Not Found", fg = "red").grid(row = 4, column = 1)
-        tkinter.Label(window, text = "Not Found", fg = "red").grid(row = 6, column = 1)
+        tkinter.Label(frame2, text = "Not Found", fg = "red").grid(row = 2, column = 0)
+        tkinter.Label(frame2, text = "Not Found", fg = "red").grid(row = 4, column = 0)
+        tkinter.Label(frame2, text = "Not Found", fg = "red").grid(row = 6, column = 0)
+        tkinter.Label(frame2, text = "Not Found", fg = "red").grid(row = 8, column = 0)
     
 
         #os._exit(0)
@@ -42,9 +46,11 @@ def weather():
     temp = f"Temperature: {weather['main']['temp']} degrees. "
     humidity = f"Humidity: {weather['main']['humidity']} percent. "
     
-    tkinter.Label(window, text = state, fg = "red").grid(row = 2, column = 1)
-    tkinter.Label(window, text = temp, fg = "red").grid(row = 4, column = 1)
-    tkinter.Label(window, text = humidity, fg = "red").grid(row = 6, column = 1)
+    l1 = tkinter.Label(frame2, text = city, fg = "red")
+    l1.grid(row = 2, column = 0, padx = 10, pady = 10)
+    tkinter.Label(frame2, text = state, fg = "red").grid(row = 4, column = 0, padx = 10, pady = 10)
+    tkinter.Label(frame2, text = temp, fg = "red").grid(row = 6, column = 0, padx = 10, pady = 10)
+    tkinter.Label(frame2, text = humidity, fg = "red").grid(row = 8, column = 0, padx = 10, pady = 10)
     
     
     print(city)
@@ -57,16 +63,27 @@ def weather():
     
 
 window = tkinter.Tk()
+window.geometry("450x200")
 window.title("Weather Data")
 
-button = tkinter.Button(window, text='Submit', command = weather)
-button.grid(row = 4, column = 0)
+frame1 = tkinter.Frame(window, padx=20, highlightthickness=3)
+frame1.grid(row=0, column=0)
 
-e = tkinter.Entry(window, width = 25, text = "Enter City Name")
-e.grid(row = 2, column = 0)
+frame2 = tkinter.Frame(window, padx=20)
+frame2.grid(row=0, column=1)
 
 
-exit_button = tkinter.Button(window, text='Exit', command = window.destroy)
-exit_button.grid(row = 6, column = 0)
+
+tkinter.Label(frame1, text = "Enter City Name:", fg = "green").grid(row = 2, column = 0)
+
+e = tkinter.Entry(frame1, width = 25, text = " Enter City Name")
+e.grid(row = 4, column = 0, padx = 10, pady = 10)
+
+button = tkinter.Button(frame1, text='Submit', command = weather)
+button.grid(row = 6, column = 0, padx = 10, pady = 10)
+
+
+exit_button = tkinter.Button(frame1, text='Exit', command = window.destroy, padx = 10, pady = 10)
+exit_button.grid(row = 8, column = 0)
 
 window.mainloop()
